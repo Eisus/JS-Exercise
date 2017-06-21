@@ -1,0 +1,444 @@
+/**
+ * Created by Susie on 5/17/2017.
+ */
+var hammingDistance = function(x,y) {
+    var max = Math.max(x,y);
+    var min = Math.min(x,y);
+    max = max.toString(2);
+    min = min.toString(2);
+    var count = 0;
+    for(var i=0; i<max.length; i++) {
+        if (i<min.length) {
+            if (max.charAt(max.length-i-1) ^ min.charAt(min.length-i-1) ==1 )count++;
+        }else {
+            if (max.charAt(max.length-i-1) ^ 0 ==1 ) count++;
+        }
+    }
+    return count;
+};
+var hammingDistance2 = function(x,y) {
+    var result = (x^y).toString(2).split('');
+    var count=0;
+    for(var i= 0, len=result.length; i<len; i++) {
+        if(result[i] == 1) count++;
+    }
+    return count;
+};
+
+//leetcode 561
+var arrayPairSum = function(nums) {
+    nums.sort(function(a,b){return a-b;});
+    //the sort function in js is according to ascii, in order to
+    //make it work well, it should be re-defined
+    var result=0;
+    for(var i= 0, len=nums.length-1; i<len; i+=2) {
+        result += Math.min(nums[i], nums[i+1]);
+    }
+    return result;
+};
+
+var moveZeroes = function(nums) {
+    var len = nums.length;
+    var zeroPos = -1;
+    for (var i = 0; i<len; i++) {
+        if (nums[i] == 0 && zeroPos==-1) {
+            zeroPos = i;
+        } else if (nums[i]!=0) {
+            if (zeroPos!=-1) {
+                var temp = nums[i];
+                nums[i] = 0;
+                nums[zeroPos] = temp;
+                zeroPos +=1;
+            }
+        }
+    }
+};
+var moveZeroes2 = function(nums) {
+  //From solutions
+    var len = nums.length;
+    if (nums === null || nums.length==0) return;
+    var innerPos = 0;
+    for (var i = 0; i<len; i++) {
+        if(nums[i]!=0) nums[innerPos++]=nums[i];
+    }
+    while(innerPos<nums.length) nums[innerPos++] =0;
+    console.log(nums);
+};
+
+//leetcode 27
+var removeElement = function(nums, val) {
+    var elementPos, len, count, temp;
+    len = nums.length;
+    elementPos = len-1;
+    count =0;
+    for(var i=0; i<len; i++) {
+        if(nums[i] === val && i<=elementPos) {
+            while (nums[elementPos] === val && elementPos>=i) {
+                elementPos-=1;
+                count++;
+            }
+            if (elementPos<i) break;
+            temp = nums[elementPos];
+            nums[elementPos] = nums[i];
+            nums[i] = temp;
+            elementPos -= 1;
+            count++;
+        }
+    }
+    nums.length = len-count;
+    console.log(nums,count);
+    return count;
+};
+var removeElement2 = function(nums, val){
+    if(nums == null || nums.length == 0) return;
+    var innerPos=0;
+    for(var i= 0, len = nums.length; i<len; i++) {
+        if(nums[i] != val) nums[innerPos++]=nums[i];
+    }
+    nums.length=innerPos;
+};
+
+//leetcode 203
+var removeElements = function(head, val) {
+    if (head == null) return null;
+    head.next = removeElements(head.next,val);
+    return head.val == val? head.next:head;
+};
+
+//leetcode 26
+var removeDuplicate = function(nums) {
+    var count, temp, pos, len;
+    len = nums.length;
+    pos = -1;
+    count = 0;
+    temp = nums[0];
+    for(var i=1; i<len; i++) {
+        if (nums[i] === temp) {
+            if(pos == -1) pos = i;
+            count++;
+        } else if(nums[i]!=temp) {
+            temp = nums[i];
+            if(count!=0) {
+                var tempNum = nums[i];
+                nums[i] = nums[pos];
+                nums[pos] = tempNum;
+                pos++;
+            }
+        }
+    }
+    nums.length = len-count;
+};
+var removeDuplicate2 = function(nums){
+    if (nums == null || nums.length==0) return;
+    var len = nums.length;
+    var temp = nums[0];
+    var innerPos = 1;
+    for(var i=1; i<len; i++) {
+        if (nums[i] != temp) {
+            temp=nums[i];
+            nums[innerPos++]=nums[i];
+        }
+    }
+    nums.length = innerPos;
+};
+var removeDuplicate3 = function(nums) {
+    if (nums == null || nums.length == 0) return;
+    var innerPos=1;
+    for (var i= 1, len=nums.length; i<len; i++) {
+        if (nums[i] != nums[i-1]) nums[innerPos++] = nums[i];
+    }
+    nums.length = innerPos;
+
+};
+
+//leetcode 80
+var removeDuplicates = function(nums) {
+    if(nums == null || nums.length ==0) return;
+    var temp = {val: nums[0], count: 1 };
+    var innerPos = 1;
+    for (var i= 1, len=nums.length; i<len; i++) {
+        if (nums[i] != temp.val) {
+            nums[innerPos++] = nums[i];
+            temp.val = nums[i];
+            temp.count = 1;
+        } else if (temp.count<2) {
+            nums [innerPos++] = nums[i];
+            temp.count++;
+        }
+    }
+    nums.length = innerPos;
+};
+var removeDuplicates2 = function(nums) {
+    //From solution
+    var count = 0;
+    for (var i= 0, len = nums.length; i<len; i++ ) {
+        if(count<2 || nums[i]>nums[count-2]) nums[count++] = nums[i];
+    }
+    nums.length = count;
+};
+
+//leetcode 237
+var deleteNode = function(node){
+    node.val = node.next.val;
+    node.next = node.next.next;
+};
+
+//leetcode 344
+var reverseString = function(s) {
+    var arr = s.split('');
+    var innerPos = arr.length-1;
+    var i = 0;
+    var temp;
+    while(i<innerPos) {
+        temp = arr[i];
+        arr[i++] = arr[innerPos];
+        arr[innerPos--] = temp;
+    }
+    s = arr.join("");
+    return s;
+};
+var reverseString2 = function(s) {
+    return s.split("").reverse().join("");
+};
+
+//leetcode 541
+var reverseStr = function(s,k) {
+    var arr = s.split("");
+    var innerPos;
+    for(var i = 0,len= s.length; i<len; i++) {
+        innerPos = len-i<k? len-1:i+k-1;
+        var count = i;
+        while (count<innerPos) {
+            var temp = arr[count];
+            arr[count++] = arr[innerPos];
+            arr[innerPos--] = temp;
+        }
+        i+=2*k-1;
+    }
+    s = arr.join('');
+    return s;
+};
+//leetcode 557
+var reverseWords = function(s) {
+    var arr = s.split(' ');
+    for (var i= 0,len=arr.length; i<len; i++) {
+        var innerPos = i+arr[i].length-1;
+        var tempArr = arr[i].split('');
+        var count =0;
+        while (count<innerPos) {
+            var temp = tempArr[count];
+            tempArr[count++] = tempArr[innerPos];
+            tempArr[innerPos--] = temp;
+        }
+        arr[i] = tempArr.join('');
+    }
+    s = arr.join(' ');
+    return s;
+};
+var reverseWords2 = function(s) {
+    var arr = s.split(' ');
+    for (var i= 0,len=arr.length; i<len; i++) {
+        arr[i] = arr[i].split('').reverse().join('');
+    }
+    s = arr.join(" ");
+    return s;
+
+};
+
+//leetcode 3
+var lengthOfLongestSubstring = function(s) {
+    var arr = s.split('');
+    var maxArr = [];
+    var maxLen = 0;
+    for (var i= 0, len=arr.length; i<len; i++) {
+        var index = maxArr.indexOf(arr[i]);
+        if (index == -1) {
+            maxArr.push(arr[i]);
+        }
+        else {
+            maxArr.splice(0, index+1);
+            maxArr.push(arr[i]);
+        }
+        if (maxArr.length > maxLen) maxLen = maxArr.length;
+    }
+    return maxLen;
+};
+//leetcode 581
+var findUnsortedSubarray = function(nums) {
+    var startPos=-2, endPos=-1, max = nums[0], len=nums.length, min = nums[len-1];
+    for (var i= 1; i<len; i++) {
+        max = Math.max(max, nums[i]);
+        min = Math.min(min, nums[len-i-1]);
+        if(nums[i]<max) endPos=i;
+        if(nums[len-i-1]>min) startPos=len-i-1;
+    }
+    return (endPos-startPos-1);
+};
+
+//leetcode 66
+var plusOne = function(digits) {
+    var carry = 0;
+    digits[digits.length-1]+=1;
+    for (var i=digits.length-1; i>-1; i--) {
+        digits[i] += carry;
+        if (digits[i] > 9) {
+            carry = 1;
+            digits[i] -= 10;
+        } else carry = 0;
+    }
+    if (carry == 1) digits.unshift(1);
+    return digits;
+};
+
+//leetcode 1
+var twoSum = function(nums, target) {
+    for(var i= 0, len=nums.length; i<len; i++) {
+        var left = target - nums[i];
+        for (var innerCount = i+1; innerCount<len; innerCount++) {
+            if (nums[innerCount] ==left) return [i,innerCount];
+        }
+    }
+};
+var twoSum2 = function(nums, target) {
+    var arr = {};
+    for (var i= 0, len=nums.length; i<len; i++) {
+        if ((target-nums[i]) in arr) {
+            return [arr[target-nums[i]], i];
+        }
+        arr[nums[i]] = i;
+    }
+};
+
+//leetcode 167
+var twoSumSort = function(numbers, target) {
+    var endPos = numbers.length-1;
+    for(var i= 0, len=numbers.length; i<len; i++) {
+        var left = target - numbers[i];
+        while(i<endPos && left<=numbers[endPos]) {
+            if (numbers[endPos] == left) return [i+1, endPos+1];
+            endPos-=1;
+        }
+    }
+};
+
+function ListNode(val) {
+    this.val = val;
+    this.next = null;
+}
+
+//leetcode 7
+var reverse = function(x) {
+    if (x>Math.pow(2,30) || (x+Math.pow(2,30))<0) return 0;
+    var str = x.toString().split("");
+    if (x>=0) return Number(str.reverse().join(""));
+    else {
+        return Number(('-'+ str.reverse().splice(0,str.length-1).join("")));
+    }
+};
+
+var changeIntoMoney = function(num) {
+    var arr = num.toString().split('');
+    var left = arr.length%3;
+    if (num<100) return '$'+num;
+    for (var i=0; i<arr.length; i++) {
+        if (left) {
+            arr.splice(left, 0, ',');
+            i = left +i +1 ;
+            left = 0;
+        } else {
+            if(i+3 != arr.length)
+                arr.splice(i+3, 0, ',');
+            i = i+3;
+        }
+    }
+    return '$' + arr.join('');
+};
+//leetcode 476
+var findComplement = function(num) {
+    var arr = num.toString(2).split('');
+    for (var i= 0, len=arr.length; i<len; i++) {
+        arr[i] = arr[i]==='0'? '1':'0';
+    }
+    return parseInt(arr.join(''),2);
+};
+var binarize= function(num) {
+    var binaryArr = [];
+    if (num===0) return 0;
+    while (num != 1) {
+        binaryArr.push(num%2);
+        num = (num - num%2)/2;
+    }
+    if (num===1) binaryArr.push(1);
+    return binaryArr.reverse().join('');
+};
+
+//leetcode 389
+var findTheDifference = function(s,t) {
+    s = s.split('').sort();
+    t = t.split('').sort();
+    for (var i= 0, len = s.length; i<len; i++) {
+        if(s[i] !== t[i]) return t[i];
+    }
+    return t[len];
+};
+
+//leetcode 575
+var distributeCandies = function(candies) {
+    candies.sort(function(a,b) {return a-b});
+    console.log(candies);
+    var temp = candies[0];
+    var typeNum = 1;
+    for (var i = 1, len=candies.length; i<len && typeNum<len/2  ; i++) {
+        if (candies[i] != temp) {
+            typeNum++;
+            temp = candies[i];
+        }
+    }
+    if (len/2>=typeNum) return typeNum;
+    return len/2;
+};
+
+//leetcode 500
+var findWords = function(words) {
+    //after the first submit, adjust the order of the search, find the
+    //first character of a word in r3 at first, followed y r2 and r1
+    //depending on the number of characters it contains separately.
+    var row = {
+        'r1': ['q','w','e','r','t','y','u','i','o','p' ],
+        'r2': ['a','s','d','f','g','h','j','k','l'],
+        'r3': ['z','x','c','v','b','n','m']
+    };
+    var result = [];
+    for (var i= 0, len=words.length; i<len; i++) {
+        var rowNum;
+        var flag = true;
+        var char = words[i].charAt(0).toLowerCase();
+        if (row['r3'].indexOf(char) != -1) rowNum ='r3';
+        else if (row['r2'].indexOf(char) != -1) rowNum='r2';
+        else rowNum='r1';
+        for (var m= 1, strLen=words[i].length; m<strLen; m++) {
+            if (row[rowNum].indexOf(words[i].charAt(m).toLowerCase()) === -1) {
+                flag = false;
+                break;
+            }
+        }
+        if (flag) result.push(words[i]);
+    }
+    return result;
+};
+
+//leetcode 566
+var matrixReshape = function(nums, r, c) {
+    var newMatrix = [];
+    //note how to define a 2d array
+    for (var x=0; x<r; x++) {newMatrix[x] =[];}
+    var colNum = nums[0].length;
+    var rowNum = nums.length;
+    if (colNum * rowNum !== r*c) return nums;
+    for (var i= 0; i<rowNum; i++) {
+        for (var m=0; m<colNum; m++) {
+            newMatrix[(i*colNum+m-(i*colNum+m)%c)/c][(i*colNum+m)%c] = nums[i][m];
+        }
+    }
+    return newMatrix;
+};
