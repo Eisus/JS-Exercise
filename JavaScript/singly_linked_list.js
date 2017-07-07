@@ -7,12 +7,12 @@ function Node(data) {
     this.data = data;
     this.next = null;
 }
-function singlyLinkedList() {
+function SinglyLinkedList() {
     this.head = null;
     this.tail = null;
     this.size = 0;
 }
-singlyLinkedList.prototype.add = function(data) {
+SinglyLinkedList.prototype.add = function(data) {
     var node = new Node(data);
     if(this.head) {
         this.tail.next = node;
@@ -23,7 +23,7 @@ singlyLinkedList.prototype.add = function(data) {
     }
     this.size++;
 };
-//singlyLinkedList.prototype.remove = function(data) {
+//SinglyLinkedList.prototype.remove = function(data) {
 //    var current = this.head;
 //    var previous = this.head;
 //    while(current) {
@@ -41,7 +41,7 @@ singlyLinkedList.prototype.add = function(data) {
 //        current = current.next;
 //    }
 //};
-singlyLinkedList.prototype.remove = function(data) {
+SinglyLinkedList.prototype.remove = function(data) {
     var previous = this.head;
     var current = this.head;
     while(current) {
@@ -60,7 +60,7 @@ singlyLinkedList.prototype.remove = function(data) {
     }
 };
 
-singlyLinkedList.prototype.insertAfter = function (data, toNodeData) {
+SinglyLinkedList.prototype.insertAfter = function (data, toNodeData) {
     var node = new Node(data);
     var current = this.head;
     while (current) {
@@ -84,7 +84,7 @@ singlyLinkedList.prototype.insertAfter = function (data, toNodeData) {
     }
 };
 
-singlyLinkedList.prototype.insertBefore = function (data, toNodeData) {
+SinglyLinkedList.prototype.insertBefore = function (data, toNodeData) {
     var node = new Node(data);
     var current = this.head;
     var previous = this.head;
@@ -103,10 +103,10 @@ singlyLinkedList.prototype.insertBefore = function (data, toNodeData) {
         current = current.next;
     }
 };
-singlyLinkedList.prototype.getSize = function() {
+SinglyLinkedList.prototype.getSize = function() {
   return this.size;
 };
-singlyLinkedList.prototype.traverse = function(fn) {
+SinglyLinkedList.prototype.traverse = function(fn) {
     var current = this.head;
     while(current) {
         if(fn) {
@@ -115,7 +115,7 @@ singlyLinkedList.prototype.traverse = function(fn) {
         current = current.next;
     }
 };
-singlyLinkedList.prototype.print = function() {
+SinglyLinkedList.prototype.print = function() {
     var current = this.head;
     var result = '';
     while (current) {
@@ -129,7 +129,7 @@ singlyLinkedList.prototype.print = function() {
 ///////////////////////////////////////////////////////////////////////////////////////
 //TEST
 ///////////////////////////////////////////////////////////////////////////////////////
-var list = new singlyLinkedList();
+var list = new SinglyLinkedList();
 list.add(2);
 list.add(3);
 list.add(4);
