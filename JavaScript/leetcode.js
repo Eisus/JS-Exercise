@@ -328,13 +328,14 @@ function ListNode(val) {
 
 //leetcode 7
 var reverse = function(x) {
-    if (x>Math.pow(2,30) || (x+Math.pow(2,30))<0) return 0;
+    if (x>Math.pow(2,31)-1 || (x+Math.pow(2,31))<0) return 0;
     var str = x.toString().split("");
     if (x>=0) return Number(str.reverse().join(""));
     else {
         return Number(('-'+ str.reverse().splice(0,str.length-1).join("")));
     }
 };
+console.log(reverse(1534236469));
 
 var changeIntoMoney = function(num) {
     var arr = num.toString().split('');
@@ -442,3 +443,144 @@ var matrixReshape = function(nums, r, c) {
     }
     return newMatrix;
 };
+
+//leetcode 412
+var fizzBuzz = function(n) {
+    var arr=[];
+    for (var i= 1; i<=n; i++) {
+        var three = i%3;
+        var five = i%5;
+        if (three === 0) {
+            if (five ===0) arr.push('FizzBuzz');
+            else arr.push('Fizz');
+        } else {
+            if (five === 0) arr.push('Buzz');
+            else arr.push(i.toString());
+        }
+    }
+    return arr;
+};
+
+//leetcode 409
+var longestPalindrome = function(s) {
+    var arr = s.split('');
+    var numCount = {};
+    for (var i= 0, len= arr.length; i<len; i++) {
+        if (arr[i] in numCount) numCount[arr[i]]++;
+        else numCount[arr[i]] = 1;
+    }
+    var totalCount = 0;
+    var countArr = [];
+    for (var x in numCount) {
+        if (numCount[x]%2 == 0) {
+            totalCount += numCount[x];
+        } else  {
+            countArr.push(numCount[x]);
+        }
+    }
+    if (countArr.length) {
+        countArr.sort(function(a,b){return a-b});
+        for (var y = 0, len2 = countArr.length; y<len2-1; y++) {
+            totalCount += (countArr[y]-1)
+        }
+        totalCount += countArr[len2-1];
+    }
+    return totalCount;
+
+};
+var longestPalindrome2 = function(s) {
+    var arr = s.split('');
+    var numCount = {};
+    for (var i= 0, len= arr.length; i<len; i++) {
+        if (arr[i] in numCount) numCount[arr[i]]++;
+        else numCount[arr[i]] = 1;
+    }
+    var totalCount = 0;
+    var countOdd = 0;
+    for (var x in numCount) {
+        if (numCount[x]%2!=0) countOdd++;
+        totalCount += numCount[x];
+    }
+    if (countOdd) totalCount -= (countOdd-1);
+    return totalCount;
+};
+
+//leetcode 506
+var findRelativeRanks = function(nums) {
+    var obj={};
+    for (var i= 0, len=nums.length; i<len; i++) {
+        obj[nums[i]] = i;
+    }
+    nums.sort(function(a,b){return b-a;});
+    var str = [];
+    for (var m=0; m<len; m++) {
+        var temp;
+        if (m === 0) temp = 'Gold Medal';
+        else if (m === 1) temp = 'Silver Medal';
+        else if (m === 2) temp = 'Bronze Medal';
+        else temp = m + 1;
+        str[obj[nums[m]]] = temp.toString();
+    }
+    return str;
+};
+var findRelativeRanks2 = function(nums) {
+    var sortnums = nums.slice(0);
+    sortnums.sort(function(a,b) {return b-a;});
+    var str = [];
+    for (var i= 0, len=nums.length; i<len; i++) {
+        var temp;
+        if (i === 0) temp = "Gold Medal";
+        else if(i === 1) temp = 'Silver Medal';
+        else if(i === 2) temp ='Bronze Medal';
+        else temp = (i+1).toString();
+        str[nums.indexOf(sortnums[i])] = temp;
+    }
+    return str;
+};
+
+//leetcode 387
+var firstUniqChar = function(s) {
+    var arr = s.split('');
+    var occur = [];
+    var uniq = [];
+    for (var i= 0, len=arr.length; i<len; i++) {
+        var indexOccur = occur.indexOf(arr[i]);
+        var indexUniq = uniq.indexOf(arr[i]);
+        if (indexOccur == -1 && indexUniq ==-1) uniq.push(arr[i]);
+        else if (indexOccur == -1 && indexUniq != -1) {
+            uniq.splice(indexUniq,1);
+            occur.push(arr[i]);
+        }
+    }
+    return arr.indexOf(uniq.shift());
+};
+var firstUniqChar2 = function(s) {
+    var arr = s.split('');
+    var obj = {};
+    for (var i= 0, len=arr.length; i<len; i++) {
+        if (arr[i] in obj) obj[arr[i]]++;
+        else obj[arr[i]]=1;
+    }
+    var minPos;
+    for (var key in obj) {
+        if (obj[key] == 1) {
+            if (minPos === undefined) minPos = arr.indexOf(key);
+            else if(arr.indexOf(key) < minPos) minPos = arr.indexOf(key);
+        }
+    }
+    return minPos === undefined ? -1:minPos;
+};
+var firstUniqChar3 = function(s) {
+    //Note: there are only 26 characters, so there is no need to use object to store
+    //the count, which is unordered
+    var count = [];
+    for (var i=0; i<26; i++) count[i]=0;
+    for (i= 0, len=s.length; i<len; i++) {
+        count[(s.charCodeAt(i)-'a'.charCodeAt(0))]++;
+    }
+    for (i=0; i<len; i++) {
+        if (count[(s.charCodeAt(i)-'a'.charCodeAt(0))] === 1) return i;
+    }
+    return -1
+};
+console.log(firstUniqChar3('z'));

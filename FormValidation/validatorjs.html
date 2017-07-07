@@ -1,10 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- This three head must come first-->
     <meta charset="UTF-8">
-    <title>ValidatorJS</title>
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>ValidatorJS Template</title>
+
+    <link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- [if it IE 9]-->
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <!--[endif]-->
+
 </head>
 <body>
+<form data-toggle="validator" role="form">
+    <div class="form-group">
+        <label for="inputName" class="control-label">Name</label>
+        <input type="text" class="form-control" id="inputName" placeholder="
+        Enter your name" required>
+    </div>
 
+    <div class="form-group has-feedback">
+        <label for="inputTwitter" class="control-label">Twitter</label>
+        <div class="input-group">
+            <span class="input-group-addon">@</span>
+            <input type="text" pattern="^[_A-z0-9]{1,}$" maxlength="15" class="form-control"
+                   id="inputTwitter">
+        </div>
+        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+        <div class="help-block with-errors">Wrong input</div>
+    </div>
+
+    <div class="form-group">
+        <label for="inputEmail" class="control-label">Email</label>
+        <input id="inputEmail" class="form-control" type="email" data-error="
+        This email address is invalid">
+        <div class="help-block with-error"></div>
+    </div>
+
+    <div class="form-group">
+        <label for="inputPassword" class="control-label">Password</label>
+        <div class="form-inline row">
+            <div class="form-group col-sm-6">
+                <input type="password" data-minlength="5" class="form-control" id="inputPassword"
+                       required>
+                <div class="help-block with-error">The length of the password is too short</div>
+            </div>
+            <div class="form-group col-sm-6">
+                <input type="password" data-match="inputPassword" class="form-control"
+                       data-match-error="These don't match" id="confirmPassword" required>
+                <div class="help-block with-error"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="radio">
+            <label>
+                <input type="radio" name="gender" required>Female
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="gender" required>Male
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="terms" data-error="Wrong message">option1
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="terms" data-error="Wrong message">option2
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+
+</form>
+
+<!--jQuery-->
+<script src="/node_modules/jquery/dist/jquery.min.js"></script>
+<script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/node_modules/bootstrap-validator/dist/validator.js"></script>
 </body>
 </html>
