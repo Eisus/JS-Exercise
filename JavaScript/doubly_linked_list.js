@@ -13,9 +13,15 @@ function DoublyLinkedList () {
 }
 DoublyLinkedList.prototype.add = function(data) {
     var node = new Node(data);
-    this.tail.next = node;
-    node.previous = this.tail;
-    this.tail = node;
+    if(this.head) {
+        this.tail.next = node;
+        node.previous = this.tail;
+        this.tail = node;
+    } else {
+        this.head = node;
+        this.tail = node;
+    }
+
 };
 DoublyLinkedList.prototype.remove = function(data) {
     var current = this.head;
@@ -67,10 +73,10 @@ DoublyLinkedList.prototype.insertAfter = function(data, toNodeData) {
                 node.previous = current;
                 this.tail = node;
             } else {
+                node.next = current.next;
                 current.next = node;
                 node.previous = current;
-                node.next = current.next;
-                current.next.previous = node;
+                node.next.previous = node;
             }
             this.size--;
         }
@@ -98,3 +104,22 @@ DoublyLinkedList.prototype.print = function() {
 DoublyLinkedList.prototype.size = function() {
     return this.size;
 };
+
+/////////////////////////////////////////////////////////
+//TEST
+/////////////////////////////////////////////////////////
+var doubleLinkList = new DoublyLinkedList();
+doubleLinkList.add(1);
+doubleLinkList.add(2);
+doubleLinkList.add(3);
+//doubleLinkList.print();doubleLinkList.print();
+doubleLinkList.insertBefore(5,1);
+doubleLinkList.insertBefore(6,2);
+//doubleLinkList.print();
+doubleLinkList.insertAfter(7,3);
+doubleLinkList.insertAfter(8,1);
+doubleLinkList.remove(1);
+doubleLinkList.remove(3);
+doubleLinkList.print();
+//console.log(doubleLinkList.tail.previous);
+//console.log(doubleLinkList.tail.previous.next);
