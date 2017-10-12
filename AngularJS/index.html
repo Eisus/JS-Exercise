@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular</title>
+    <script src="../node_modules/jquery/dist/jquery.js"></script>
+    <style>
+        .container {
+            height: 200px;
+            width: 200px;
+            background-color: salmon;
+            margin: auto
+        }
+        .element {
+            height: 100px;
+            width: 100px;
+            background-color: silver;
+            margin: auto
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="container" contenteditable="true">
+</div>
+
+<script>
+    $('.container').on('blur', function(){
+        console.log($('.container').html());
+    });
+</script>
+
+</body>
+</html>

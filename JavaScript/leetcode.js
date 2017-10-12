@@ -335,7 +335,6 @@ var reverse = function(x) {
         return Number(('-'+ str.reverse().splice(0,str.length-1).join("")));
     }
 };
-console.log(reverse(1534236469));
 
 var changeIntoMoney = function(num) {
     var arr = num.toString().split('');
@@ -583,4 +582,71 @@ var firstUniqChar3 = function(s) {
     }
     return -1
 };
-console.log(firstUniqChar3('z'));
+
+//leetcode 2
+var l1 = new ListNode(2);
+l1.next = new ListNode(4);
+//l1.next.next = new ListNode(3);
+var l2 = new ListNode(5);
+l2.next = new ListNode(6);
+l2.next.next = new ListNode(4);
+//Note: it's easy to forget that if the last carry is 1, it should be appended to the last of the list.
+var addTwoNumbers = function(l1, l2) {
+    var carry = 0;
+    while (l1 || l2) {
+        if (l1 && l2) {
+            var num = (l1.val + l2.val + carry)%10;
+            carry = (l1.val + l2.val + carry)>9 ? 1:0;
+            if (current) {
+                current.next = new ListNode(num);
+                current = current.next;
+            } else {
+                var head = new ListNode(num);
+                var current = head;
+            }
+            l1 = l1.next;
+            l2 = l2.next;
+        } else if (l1 && !l2) {
+            num = (l1.val + carry) % 10;
+            carry = (l1.val +carry) > 9 ? 1:0;
+            current.next = new ListNode(num);
+            current = current.next;
+            l1 = l1.next;
+        } else if (!l1 && l2) {
+            num = (l2.val + carry) % 10;
+            carry = (l2.val +carry) > 9 ? 1:0;
+            current.next = new ListNode(num);
+            current = current.next;
+            l2 = l2.next;
+        }
+    }
+    if (carry) {
+        current.next = new ListNode(1);
+    }
+    return head;
+};
+var addTwoNumbers2 = function(l1, l2) {
+    var carry =0;
+    while(l1 || l2) {
+        //Note that the property can be visited only when the node exist, so use l1.val = ... can cause error.
+        l1 = l1 === null ? new ListNode(0): l1;
+        l2 = l2 === null ? new ListNode(0): l2;
+        var num = (l1.val + l2.val + carry)%10;
+        carry = (l1.val + l2.val + carry )>9 ? 1:0;
+        if (current) {
+            current.next = new ListNode(num);
+            current = current.next;
+        } else {
+            var head = new ListNode(num);
+            var current = head;
+        }
+        l1 = l1.next;
+        l2 = l2.next;
+    }
+    if (carry) {
+        current.next = new ListNode(1);
+    }
+    return head;
+};
+
+console.log(addTwoNumbers2(l1,l2));
