@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Backgrounds & Borders</title>
+</head>
+<style>
+    .translucent-borders {
+        height: 150px;
+        width: 450px;
+        background: greenyellow;
+        border: 10px dashed purple;
+    }
+    .pseudo {
+        margin-top: 20px;
+        border: 5px solid salmon;
+        background-color: greenyellow;
+    }
+    .pseudo:before {
+        content: '-----'
+    }
+    .pseudo:after {
+        content: '-----'
+    }
+    .shape {
+        width: 0;
+        height: 0;
+        border-left: 100px solid yellowgreen;
+        border-right: 100px solid purple;
+        border-top: 100px solid pink;
+        border-bottom: 100px solid salmon;
+        margin-top: 20px;
+    }
+    .triangle {
+        border: 50px solid transparent;
+        border-top-color: yellowgreen;
+        margin-top: 20px;
+        width: 0;
+        height: 0;
+    }
+    .chat {
+        width: 150px;
+        height: 50px;
+        background-color: yellowgreen;
+        border-radius: 5px;
+        position: relative;
+        margin: 20px 0 0 50px;
+    }
+    .chat:before {
+        content: '';
+        border: 6px solid transparent;
+        border-right-color: yellowgreen;
+        /*border-left: 10px solid crimson;*/
+        /*border-right: 10px solid darkcyan;*/
+        /*border-bottom: 10px solid salmon;*/
+        /*border-top: 10px solid cornflowerblue;*/
+        display: block;
+        position: absolute;
+        left: -12px;
+        top: 15px;
+    }
+    .background {
+        width: 100%;
+        height: 141px;
+        background: url('../Resources/bg-sm.png') round;
+    }
+
+</style>
+<body>
+
+<!--<div class="translucent-borders"></div>-->
+<!--<div class="pseudo">Pseudo Test</div>-->
+<!--<div class="shape"></div>-->
+<!--<div class="triangle"></div>-->
+<!--<div class="chat"></div>-->
+<div class="background"></div>
+</body>
+</html>
