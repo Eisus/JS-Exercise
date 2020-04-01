@@ -54,7 +54,7 @@ var moveZeroes = function(nums) {
     }
 };
 var moveZeroes2 = function(nums) {
-  //From solutions
+    //From solutions
     var len = nums.length;
     if (nums === null || nums.length==0) return;
     var innerPos = 0;
@@ -650,3 +650,76 @@ var addTwoNumbers2 = function(l1, l2) {
 };
 
 console.log(addTwoNumbers2(l1,l2));
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} l1
+ * @param {ListNode} l2
+ * @return {ListNode}
+ */
+var addTwoNumbers3 = function(l1, l2) {
+    let calc = function(v1, v2, carry) {
+        let res = (v1 || 0) + (v2 || 0) + carry; // Note 1: handle val = null
+        if (res > 9) {
+            carry = 1;
+            res -= 10;
+        } else {
+            carry = 0
+        }
+        return {res: res, carry: carry};
+    };
+    let add = function(node1, node2, carry, res) {
+        if (!node1 && !node2) {
+            if (carry) {
+                res.next = new ListNode(1);
+            }
+            return;
+        } else if (!node1 && node2 ) {
+            let _tmp = calc(0, node2.val, carry); // Note 2: carry needs to be handled even when one node list ends. eg [1][9,2]
+            carry = _tmp.carry;
+            res.next = new ListNode(_tmp.res);
+            add (null , node2.next, carry, res.next);
+        } else if (node1 && !node2) {
+            let _tmp = calc(0, node1.val, carry);
+            carry = _tmp.carry;
+            res.next = new ListNode(_tmp.res);
+            add (node1.next, null, carry, res.next);
+        } else {
+            let _tmp = calc (node1.val, node2.val, carry);
+            res.next = new ListNode(_tmp.res);
+            carry = _tmp.carry;
+            add(node1.next, node2.next, carry, res.next);
+        }
+    };
+    let rootTmp = calc(l1.val, l2.val, 0);
+    let res = new ListNode(rootTmp.res); // Note 3: ensure the value passed to the add function is an object instead of null
+
+    add (l1.next, l2.next, rootTmp.carry, res);
+    return res;
+};
+// Better answer
+function addTwoNumbers4(l1, l2) {
+    const before = new ListNode();
+    let tail = before;
+    let c = 0;
+
+    while (l1 || l2 || c) {
+        const v1 = l1 ? l1.val : 0;
+        const v2 = l2 ? l2.val : 0;
+        const v = v1+v2+c;
+
+        tail.next = new ListNode(v%10);
+        tail = tail.next;
+        c = v >= 10 ? 1 : 0;
+        l1 = l1&&l1.next;
+        l2 = l2&&l2.next;
+    }
+
+    return before.next;
+}
