@@ -723,3 +723,26 @@ function addTwoNumbers4(l1, l2) {
 
     return before.next;
 }
+
+var lengthOfLongestSubstring = function(s) {
+    let maxCount = 0;
+    for (let x = 0, len = s.length; x < len; x++) {
+        let dict = {};
+        let count = 0;
+        for (let y = x; y < len; y++) {
+            let tmp = s.charAt(y);
+            if (!(tmp in dict)) {
+                count ++;
+                dict[tmp] = tmp;
+                maxCount = count > maxCount ? count : maxCount;
+            } else {
+                maxCount = count > maxCount ? count : maxCount;
+                count = 1;
+                dict = {};
+                dict[tmp] = tmp;
+            }
+        }
+    }
+    return maxCount;
+
+};
